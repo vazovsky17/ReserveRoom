@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using ReserveRoom.Exceptions;
 using ReserveRoom.Models;
+using ReserveRoom.ViewModels;
 
 namespace ReserveRoom
 {
@@ -17,27 +18,12 @@ namespace ReserveRoom
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            Hotel hotel = new Hotel("VazovskyApp Suites");
-            try
+            MainWindow = new MainWindow()
             {
+                DataContext = new MainViewModel()
+            };
+            MainWindow.Show();
 
-                hotel.MakeReservation(new Reservation(
-                    new RoomID(1, 3),
-                    "VazovskyApp",
-                    new DateTime(2000, 1, 1),
-                    new DateTime(2000, 1, 2)));
-                hotel.MakeReservation(new Reservation(
-                    new RoomID(1, 3),
-                    "VazovskyApp",
-                    new DateTime(2000, 1, 3),
-                    new DateTime(2000, 1, 4)));
-            }
-            catch (ReservationConflictException ex)
-            {
-
-            }
-
-            IEnumerable<Reservation> reservations = hotel.GetAllReservations();
             base.OnStartup(e);
         }
     }
