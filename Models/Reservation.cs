@@ -34,7 +34,7 @@ namespace ReserveRoom.Models
             {
                 return false;
             }
-            return reservation.StartTime < EndTime || reservation.EndTime > StartTime;
+            return reservation.StartTime < EndTime && reservation.EndTime > StartTime;
         }
     }
 }

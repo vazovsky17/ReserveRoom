@@ -17,9 +17,11 @@ namespace ReserveRoom.Models
             FloorNumber = floorNumber;
             RoomNumber = roomNumber;
         }
-        public override bool Equals(object? obj)
+        public override bool Equals(object obj)
         {
-            return obj is RoomID roomID && FloorNumber == roomID.FloorNumber && RoomNumber == roomID.RoomNumber;
+            return obj is RoomID roomID &&
+                FloorNumber == roomID.FloorNumber &&
+                RoomNumber == roomID.RoomNumber;
         }
 
         public override int GetHashCode()
@@ -39,8 +41,9 @@ namespace ReserveRoom.Models
                 return true;
             }
 
-            return roomID1 is not null && roomID1.Equals(roomID2);
+            return !(roomID1 is null) && roomID1.Equals(roomID2);
         }
+
         public static bool operator !=(RoomID roomID1, RoomID roomID2)
         {
             return !(roomID1 == roomID2);

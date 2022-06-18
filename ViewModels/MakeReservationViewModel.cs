@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ReserveRoom.Commands;
+using ReserveRoom.Models;
 
 namespace ReserveRoom.ViewModels
 {
@@ -51,7 +53,7 @@ namespace ReserveRoom.ViewModels
             }
         }
 
-        private DateTime _startDate;
+        private DateTime _startDate = new DateTime(2022, 1, 1);
         public DateTime StartDate
         {
             get
@@ -65,7 +67,7 @@ namespace ReserveRoom.ViewModels
             }
         }
 
-        private DateTime _endDate;
+        private DateTime _endDate = new DateTime(2022, 6, 18);
         public DateTime EndDate
         {
             get
@@ -82,8 +84,10 @@ namespace ReserveRoom.ViewModels
         public ICommand SubmitCommand { get; }
         public ICommand CancelCommand { get; }
 
-        public MakeReservationViewModel()
+        public MakeReservationViewModel(Hotel hotel)
         {
+            SubmitCommand = new MakeReservationCommand(this, hotel);
+            CancelCommand = new CancelMakeReservationCommand();
         }
     }
 }

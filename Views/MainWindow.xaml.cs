@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ReserveRoom.ViewModels;
 
-namespace ReserveRoom
+namespace ReserveRoom.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -24,7 +24,6 @@ namespace ReserveRoom
         public MainWindow()
         {
             InitializeComponent();
-            
         }
     }
 }

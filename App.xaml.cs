@@ -8,6 +8,7 @@ using System.Windows;
 using ReserveRoom.Exceptions;
 using ReserveRoom.Models;
 using ReserveRoom.ViewModels;
+using ReserveRoom.Views;
 
 namespace ReserveRoom
 {
@@ -16,11 +17,16 @@ namespace ReserveRoom
     /// </summary>
     public partial class App : Application
     {
+        private readonly Hotel _hotel;
+        public App()
+        {
+            _hotel = new Hotel("VazovskyApp Suites");
+        }
         protected override void OnStartup(StartupEventArgs e)
         {
             MainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel()
+                DataContext = new MainViewModel(_hotel)
             };
             MainWindow.Show();
 

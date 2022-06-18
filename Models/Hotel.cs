@@ -13,8 +13,8 @@ namespace ReserveRoom.Models
         public string Name { get; }
         public Hotel(string name)
         {
-            _reservationBook = new ReservationBook();
             Name = name;
+            _reservationBook = new ReservationBook();
         }
 
         /// <summary>

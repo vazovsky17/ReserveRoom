@@ -40,6 +40,7 @@ namespace ReserveRoom.Models
                     throw new ReservationConflictException(existingReservation, reservation);
                 }
             }
+
             _reservations.Add(reservation);
         }
     }
