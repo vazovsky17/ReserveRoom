@@ -4,26 +4,32 @@ using System.Linq;
 using System.Text;
 using ReserveRoom.Exceptions;
 using System.Threading.Tasks;
+using ReserveRoom.Services.ReservationProviders;
+using ReserveRoom.Services.ReservationCreators;
+using ReserveRoom.Services.ReservationConflictValidators;
 
 namespace ReserveRoom.Models
 {
     public class ReservationBook
     {
-        private readonly List<Reservation> _reservations;
+        private readonly IReservationProvider _reservationProvider;
+        private readonly IReservationCreator _reservationCreator;
+        private readonly IReservationConflictValidator _reservationConflictValidator;
 
-        public ReservationBook()
+        public ReservationBook(IReservationProvider reservationProvider, IReservationCreator reservationCreator, IReservationConflictValidator reservationConflictValidator)
         {
-            _reservations = new List<Reservation>();
+            _reservationProvider = reservationProvider;
+            _reservationCreator = reservationCreator;
+            _reservationConflictValidator = reservationConflictValidator;
         }
-
 
         /// <summary>
         /// Получение всех бронирований
         /// </summary>
         /// <returns>Все бронирования</returns>
-        public IEnumerable<Reservation> GetAllReservations()
+        public async Task<IEnumerable<Reservation>> GetAllReservations()
         {
-            return _reservations;
+            return await _reservationProvider.GetAllReservation();
         }
 
         /// <summary>
@@ -31,17 +37,16 @@ namespace ReserveRoom.Models
         /// </summary>
         /// <param name="reservation">Новое бронирование</param>
         /// <exception cref="ReservationConflictException">Конфликт бронирований</exception>
-        public void AddReservation(Reservation reservation)
+        public async Task AddReservation(Reservation reservation)
         {
-            foreach (Reservation existingReservation in _reservations)
+            Reservation conflictReservation = await _reservationConflictValidator.GetConflictingReservation(reservation);
+
+            if (conflictReservation != null)
             {
-                if (existingReservation.Conflicts(reservation))
-                {
-                    throw new ReservationConflictException(existingReservation, reservation);
-                }
+                throw new ReservationConflictException(conflictReservation, reservation);
             }
 
-            _reservations.Add(reservation);
+            await _reservationCreator.CreateReservation(reservation);
         }
     }
 }

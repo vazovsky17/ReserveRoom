@@ -8,7 +8,6 @@ namespace ReserveRoom.Models
 {
     public class RoomID
     {
-
         public int FloorNumber { get; }
         public int RoomNumber { get; }
 
@@ -17,6 +16,12 @@ namespace ReserveRoom.Models
             FloorNumber = floorNumber;
             RoomNumber = roomNumber;
         }
+
+        public override string ToString()
+        {
+            return $"{FloorNumber}.{RoomNumber}";
+        }
+
         public override bool Equals(object obj)
         {
             return obj is RoomID roomID &&
@@ -27,11 +32,6 @@ namespace ReserveRoom.Models
         public override int GetHashCode()
         {
             return HashCode.Combine(FloorNumber, RoomNumber);
-        }
-
-        public override string ToString()
-        {
-            return $"{FloorNumber}.{RoomNumber}";
         }
 
         public static bool operator ==(RoomID roomID1, RoomID roomID2)
@@ -48,5 +48,6 @@ namespace ReserveRoom.Models
         {
             return !(roomID1 == roomID2);
         }
+
     }
 }

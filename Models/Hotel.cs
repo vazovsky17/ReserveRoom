@@ -11,19 +11,19 @@ namespace ReserveRoom.Models
         private readonly ReservationBook _reservationBook;
 
         public string Name { get; }
-        public Hotel(string name)
+        public Hotel(string name, ReservationBook reservationBook)
         {
             Name = name;
-            _reservationBook = new ReservationBook();
+            _reservationBook = reservationBook;
         }
 
         /// <summary>
         /// Получение всех бронирований
         /// </summary>
         /// <returns>Все бронирования</returns>
-        public IEnumerable<Reservation> GetAllReservations()
+        public async Task<IEnumerable<Reservation>> GetAllReservations()
         {
-            return _reservationBook.GetAllReservations();
+            return await _reservationBook.GetAllReservations();
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace ReserveRoom.Models
         /// </summary>
         /// <param name="reservation">Новое бронирование</param>
         /// <exception cref="ReservationConflictException">Конфликт бронирований</exception>
-        public void MakeReservation(Reservation reservation)
+        public async Task MakeReservation(Reservation reservation)
         {
             _reservationBook.AddReservation(reservation);
         }
