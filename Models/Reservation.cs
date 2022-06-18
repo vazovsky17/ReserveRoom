@@ -18,10 +18,16 @@ namespace ReserveRoom.Models
         public Reservation(RoomID roomID, string username, DateTime startTime, DateTime endTime)
         {
             RoomID = roomID;
+            Username = username;
             StartTime = startTime;
             EndTime = endTime;
         }
 
+        /// <summary>
+        /// Выявление конфликтов в датах бронирования
+        /// </summary>
+        /// <param name="reservation">Новое бронирование</param>
+        /// <returns>Есть ли конфликт</returns>
         public bool Conflicts(Reservation reservation)
         {
             if (reservation.RoomID == RoomID)

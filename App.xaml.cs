@@ -37,7 +37,7 @@ namespace ReserveRoom
 
             }
 
-            IEnumerable<Reservation> reservations = hotel.GetReservationsForUser("VazovskyApp");
+            IEnumerable<Reservation> reservations = hotel.GetAllReservations();
             base.OnStartup(e);
         }
     }

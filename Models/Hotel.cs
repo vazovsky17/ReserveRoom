@@ -16,22 +16,21 @@ namespace ReserveRoom.Models
             _reservationBook = new ReservationBook();
             Name = name;
         }
-        
+
         /// <summary>
-        /// Получение всех бронирований для пользователя
+        /// Получение всех бронирований
         /// </summary>
-        /// <param name="username">Имя пользователя</param>
-        /// <returns>Бронирования пользователя</returns>
-        public IEnumerable<Reservation> GetReservationsForUser(string username)
+        /// <returns>Все бронирования</returns>
+        public IEnumerable<Reservation> GetAllReservations()
         {
-            return _reservationBook.GetReservationsForUser(username);
+            return _reservationBook.GetAllReservations();
         }
 
         /// <summary>
         /// Создание бронирования
         /// </summary>
         /// <param name="reservation">Новое бронирование</param>
-        /// <exception cref="ReservationConflictException"/>
+        /// <exception cref="ReservationConflictException">Конфликт бронирований</exception>
         public void MakeReservation(Reservation reservation)
         {
             _reservationBook.AddReservation(reservation);

@@ -16,11 +16,21 @@ namespace ReserveRoom.Models
             _reservations = new List<Reservation>();
         }
 
-        public IEnumerable<Reservation> GetReservationsForUser(string username)
+
+        /// <summary>
+        /// Получение всех бронирований
+        /// </summary>
+        /// <returns>Все бронирования</returns>
+        public IEnumerable<Reservation> GetAllReservations()
         {
-            return _reservations.Where(r => r.Username == username);
+            return _reservations;
         }
 
+        /// <summary>
+        /// Добавление бронирования
+        /// </summary>
+        /// <param name="reservation">Новое бронирование</param>
+        /// <exception cref="ReservationConflictException">Конфликт бронирований</exception>
         public void AddReservation(Reservation reservation)
         {
             foreach (Reservation existingReservation in _reservations)
