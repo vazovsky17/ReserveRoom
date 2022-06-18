@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32602.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReserveRoom", "ReserveRoom.csproj", "{8794B879-AC51-4963-B606-0E26BE92DBAA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8794B879-AC51-4963-B606-0E26BE92DBAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8794B879-AC51-4963-B606-0E26BE92DBAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8794B879-AC51-4963-B606-0E26BE92DBAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8794B879-AC51-4963-B606-0E26BE92DBAA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {32855AEA-9A4D-4F2A-94B2-BEEBC1279204}
+	EndGlobalSection
+EndGlobal
