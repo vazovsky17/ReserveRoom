@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +13,7 @@ using ReserveRoom.Stores;
 
 namespace ReserveRoom.ViewModels
 {
-    public class MakeReservationViewModel : ViewModelBase
+    public class MakeReservationViewModel : ViewModelBase, INotifyDataErrorInfo
     {
         private string _username;
         public string Username
@@ -66,10 +68,21 @@ namespace ReserveRoom.ViewModels
             {
                 _startDate = value;
                 OnPropertyChanged(nameof(StartDate));
+
+                ClearErrors(nameof(StartDate));
+                ClearErrors(nameof(EndDate));
+
+                if (EndDate < StartDate)
+                {
+                    AddError("The end date cannot be before the start date.", nameof(StartDate));
+                    AddError("The end date cannot be before the start date.", nameof(EndDate));
+                }
             }
         }
 
         private DateTime _endDate = new DateTime(2022, 6, 18);
+
+
         public DateTime EndDate
         {
             get
@@ -80,16 +93,60 @@ namespace ReserveRoom.ViewModels
             {
                 _endDate = value;
                 OnPropertyChanged(nameof(EndDate));
+
+                ClearErrors(nameof(StartDate));
+                ClearErrors(nameof(EndDate));
+
+                if (EndDate < StartDate)
+                {
+                    AddError("The start date cannot be after the end date.", nameof(StartDate));
+                    AddError("The end date cannot be before the start date.", nameof(EndDate));
+                }
             }
+        }
+
+        private void AddError(string errorMessage, string propertyName)
+        {
+            if (!_propertyNameToErrorsDictionary.ContainsKey(propertyName))
+            {
+                _propertyNameToErrorsDictionary.Add(propertyName, new List<string>());
+            }
+
+            _propertyNameToErrorsDictionary[propertyName].Add(errorMessage);
+
+            OnErrorsChanged(propertyName);
+        }
+
+        private void OnErrorsChanged(string propertyName)
+        {
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+        }
+
+        private void ClearErrors(string propertyName)
+        {
+            _propertyNameToErrorsDictionary.Remove(propertyName);
+            OnErrorsChanged(nameof(propertyName));
         }
 
         public ICommand SubmitCommand { get; }
         public ICommand CancelCommand { get; }
 
+        private readonly Dictionary<string, List<String>> _propertyNameToErrorsDictionary;
+
+        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+        public bool HasErrors => _propertyNameToErrorsDictionary.Any();
+
         public MakeReservationViewModel(HotelStore hotelStore, NavigationService reservationViewNavigationService)
         {
             SubmitCommand = new MakeReservationCommand(this, hotelStore, reservationViewNavigationService);
             CancelCommand = new NavigateCommand(reservationViewNavigationService);
+
+            _propertyNameToErrorsDictionary = new Dictionary<string, List<string>>();
+        }
+
+        public IEnumerable GetErrors(string? propertyName)
+        {
+            return _propertyNameToErrorsDictionary.GetValueOrDefault(propertyName, new List<string>());
         }
     }
 }

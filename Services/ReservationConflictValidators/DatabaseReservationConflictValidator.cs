@@ -22,25 +22,25 @@ namespace ReserveRoom.Services.ReservationConflictValidators
         {
             using (ReserveRoomDbContext context = _dbContextFactory.CreateDbContext())
             {
-                ReservationDTO? reservationDTO = await context.Reservations
+                ReservationDTO reservationDTO = await context.Reservations
                     .Where(r => r.FloorNumber == reservation.RoomID.FloorNumber)
                     .Where(r => r.RoomNumber == reservation.RoomID.RoomNumber)
                     .Where(r => r.EndTime > reservation.StartTime)
                     .Where(r => r.StartTime < reservation.EndTime)
                     .FirstOrDefaultAsync();
+               
+                if (reservationDTO == null)
+                {
+                    return null;
+                }
 
-                return reservationDTO == null ? null : ToReservation(reservationDTO);
+                return ToReservation(reservationDTO);
             }
         }
-        private static Reservation ToReservation(ReservationDTO reservationDTO)
+
+        private static Reservation ToReservation(ReservationDTO dto)
         {
-            return new Reservation(
-                new RoomID(
-                    reservationDTO.FloorNumber,
-                    reservationDTO.RoomNumber),
-                reservationDTO.Username,
-                reservationDTO.StartTime,
-                reservationDTO.EndTime);
+            return new Reservation(new RoomID(dto.FloorNumber, dto.RoomNumber), dto.Username, dto.StartTime, dto.EndTime);
         }
     }
 }

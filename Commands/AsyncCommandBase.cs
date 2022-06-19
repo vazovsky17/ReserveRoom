@@ -39,8 +39,6 @@ namespace ReserveRoom.Commands
             {
                 IsExecuting = false;
             }
-
-            IsExecuting = true;
         }
 
         public abstract Task ExecuteAsync(object? parameter);

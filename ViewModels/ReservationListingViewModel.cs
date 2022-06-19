@@ -18,6 +18,37 @@ namespace ReserveRoom.ViewModels
         public ICommand LoadReservationdCommand { get; }
         public ICommand MakeReservationCommand { get; }
 
+        private bool _isLoading;
+        public bool IsLoading
+        {
+            get
+            {
+                return _isLoading;
+            }
+            set
+            {
+                _isLoading = value;
+                OnPropertyChanged(nameof(IsLoading));
+            }
+        }
+
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get
+            {
+                return _errorMessage;
+            }
+            set
+            {
+                _errorMessage = value;
+                OnPropertyChanged(nameof(ErrorMessage));
+                OnPropertyChanged(nameof(HasErrorMessage));
+            }
+        }
+
+        public bool HasErrorMessage => !string.IsNullOrEmpty(ErrorMessage);
+
         public ReservationListingViewModel(HotelStore hotelStore, NavigationService makeReservationNavigationService)
         {
             _hotelStore = hotelStore;

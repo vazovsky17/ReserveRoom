@@ -22,6 +22,9 @@ namespace ReserveRoom.Services.ReservationProviders
             using (ReserveRoomDbContext context = _dbContextFactory.CreateDbContext())
             {
                 IEnumerable<ReservationDTO> reservationDTOs = await context.Reservations.ToListAsync();
+
+                await Task.Delay(2000);
+
                 return reservationDTOs.Select(reservationDTO => ToReservation(reservationDTO));
             }
         }
