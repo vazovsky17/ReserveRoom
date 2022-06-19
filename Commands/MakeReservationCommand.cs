@@ -17,24 +17,27 @@ namespace ReserveRoom.Commands
     {
         private readonly MakeReservationViewModel _makeReservationViewModel;
         private readonly HotelStore _hotelStore;
-        private readonly NavigationService _reservationViewNavigationService;
+        private readonly NavigationService<ReservationListingViewModel> _reservationViewNavigationService;
 
-        public MakeReservationCommand(MakeReservationViewModel makeReservationViewModel, HotelStore hotelStore, NavigationService reservationViewNavigationService)
+        public MakeReservationCommand(MakeReservationViewModel makeReservationViewModel,
+            HotelStore hotelStore,
+            NavigationService<ReservationListingViewModel> reservationViewNavigationService)
         {
             _makeReservationViewModel = makeReservationViewModel;
             _hotelStore = hotelStore;
             _reservationViewNavigationService = reservationViewNavigationService;
+
             _makeReservationViewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
 
-        public override bool CanExecute(object? parameter)
+        public override bool CanExecute(object parameter)
         {
             return !string.IsNullOrEmpty(_makeReservationViewModel.Username) &&
                 _makeReservationViewModel.FloorNumber > 0 &&
                 base.CanExecute(parameter);
         }
 
-        public async override Task ExecuteAsync(object? parameter)
+        public override async Task ExecuteAsync(object parameter)
         {
             Reservation reservation = new Reservation(
                 new RoomID(_makeReservationViewModel.FloorNumber, _makeReservationViewModel.RoomNumber),
@@ -44,7 +47,7 @@ namespace ReserveRoom.Commands
 
             try
             {
-                await _hotelStore.MakeReservation(reservation);   
+                await _hotelStore.MakeReservation(reservation);
 
                 MessageBox.Show("Successfully reserved room.", "Success",
                     MessageBoxButton.OK, MessageBoxImage.Information);
@@ -59,11 +62,11 @@ namespace ReserveRoom.Commands
             catch (Exception)
             {
                 MessageBox.Show("Failed to make reservation.", "Error",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
+                   MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(MakeReservationViewModel.Username) ||
                 e.PropertyName == nameof(MakeReservationViewModel.FloorNumber))

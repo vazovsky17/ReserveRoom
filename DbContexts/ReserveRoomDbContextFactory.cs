@@ -2,11 +2,11 @@
 
 namespace ReserveRoom.DbContexts
 {
-    public class ReserseRoomDbContextFactory
+    public class ReserveRoomDbContextFactory
     {
         private readonly string _connectionString;
 
-        public ReserseRoomDbContextFactory(string connectionString)
+        public ReserveRoomDbContextFactory(string connectionString)
         {
             _connectionString = connectionString;
         }

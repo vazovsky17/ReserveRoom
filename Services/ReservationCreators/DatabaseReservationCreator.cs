@@ -11,9 +11,9 @@ namespace ReserveRoom.Services.ReservationCreators
 {
     public class DatabaseReservationCreator : IReservationCreator
     {
-        private readonly ReserseRoomDbContextFactory _dbContextFactory;
+        private readonly ReserveRoomDbContextFactory _dbContextFactory;
 
-        public DatabaseReservationCreator(ReserseRoomDbContextFactory dbContextFactory)
+        public DatabaseReservationCreator(ReserveRoomDbContextFactory dbContextFactory)
         {
             _dbContextFactory = dbContextFactory;
         }

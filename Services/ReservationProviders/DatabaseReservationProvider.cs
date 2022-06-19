@@ -10,9 +10,9 @@ namespace ReserveRoom.Services.ReservationProviders
 {
     public class DatabaseReservationProvider : IReservationProvider
     {
-        private readonly ReserseRoomDbContextFactory _dbContextFactory;
+        private readonly ReserveRoomDbContextFactory _dbContextFactory;
 
-        public DatabaseReservationProvider(ReserseRoomDbContextFactory dbContextFactory)
+        public DatabaseReservationProvider(ReserveRoomDbContextFactory dbContextFactory)
         {
             _dbContextFactory = dbContextFactory;
         }

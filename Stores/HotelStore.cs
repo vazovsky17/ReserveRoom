@@ -12,14 +12,16 @@ namespace ReserveRoom.Stores
         private readonly Hotel _hotel;
         private readonly List<Reservation> _reservations;
         private Lazy<Task> _initializeLazy;
-        
+
         public IEnumerable<Reservation> Reservations => _reservations;
+
         public event Action<Reservation> ReservationMade;
-        
+
         public HotelStore(Hotel hotel)
         {
             _hotel = hotel;
             _initializeLazy = new Lazy<Task>(Initialize);
+
             _reservations = new List<Reservation>();
         }
 
@@ -32,8 +34,8 @@ namespace ReserveRoom.Stores
             catch (Exception)
             {
                 _initializeLazy = new Lazy<Task>(Initialize);
+                throw;
             }
-
         }
 
         public async Task MakeReservation(Reservation reservation)
@@ -56,8 +58,6 @@ namespace ReserveRoom.Stores
 
             _reservations.Clear();
             _reservations.AddRange(reservations);
-
-
         }
     }
 }

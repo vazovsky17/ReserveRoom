@@ -10,11 +10,11 @@ using ReserveRoom.ViewModels;
 
 namespace ReserveRoom.Commands
 {
-    public class NavigateCommand : CommandBase
+    public class NavigateCommand<TViewModel> : CommandBase where TViewModel : ViewModelBase
     {
-        private readonly NavigationService _navigateService;
+        private readonly NavigationService<TViewModel> _navigateService;
 
-        public NavigateCommand(NavigationService navigateService)
+        public NavigateCommand(NavigationService<TViewModel> navigateService)
         {
             _navigateService = navigateService;
         }

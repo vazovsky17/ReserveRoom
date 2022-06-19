@@ -12,9 +12,9 @@ namespace ReserveRoom.Services.ReservationConflictValidators
 {
     public class DatabaseReservationConflictValidator : IReservationConflictValidator
     {
-        private readonly ReserseRoomDbContextFactory _dbContextFactory;
+        private readonly ReserveRoomDbContextFactory _dbContextFactory;
 
-        public DatabaseReservationConflictValidator(ReserseRoomDbContextFactory dbContextFactory)
+        public DatabaseReservationConflictValidator(ReserveRoomDbContextFactory dbContextFactory)
         {
             _dbContextFactory = dbContextFactory;
         }

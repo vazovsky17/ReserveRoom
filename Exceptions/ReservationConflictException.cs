@@ -12,22 +12,23 @@ namespace ReserveRoom.Exceptions
     {
         public Reservation ExistingReservation { get; }
         public Reservation IncomingReservation { get; }
+
         public ReservationConflictException(Reservation existingReservation, Reservation incomingReservation)
         {
             ExistingReservation = existingReservation;
             IncomingReservation = incomingReservation;
         }
 
-        public ReservationConflictException(string? message, Reservation incomingReservation, Reservation existingReservation) : base(message)
+        public ReservationConflictException(string message, Reservation existingReservation, Reservation incomingReservation) : base(message)
         {
-            IncomingReservation = incomingReservation;
             ExistingReservation = existingReservation;
+            IncomingReservation = incomingReservation;
         }
 
-        public ReservationConflictException(string? message, Exception? innerException, Reservation incomingReservation, Reservation existingReservation) : base(message, innerException)
+        public ReservationConflictException(string message, Exception innerException, Reservation existingReservation, Reservation incomingReservation) : base(message, innerException)
         {
-            IncomingReservation = incomingReservation;
             ExistingReservation = existingReservation;
+            IncomingReservation = incomingReservation;
         }
     }
 }

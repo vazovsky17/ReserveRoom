@@ -33,7 +33,7 @@ namespace ReserveRoom.Models
         /// <exception cref="ReservationConflictException">Конфликт бронирований</exception>
         public async Task MakeReservation(Reservation reservation)
         {
-            _reservationBook.AddReservation(reservation);
+            await _reservationBook.AddReservation(reservation);
         }
     }
 }
