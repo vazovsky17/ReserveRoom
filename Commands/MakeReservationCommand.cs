@@ -8,6 +8,7 @@ using System.Windows;
 using ReserveRoom.Exceptions;
 using ReserveRoom.Models;
 using ReserveRoom.Services;
+using ReserveRoom.Stores;
 using ReserveRoom.ViewModels;
 
 namespace ReserveRoom.Commands
@@ -15,13 +16,13 @@ namespace ReserveRoom.Commands
     public class MakeReservationCommand : AsyncCommandBase
     {
         private readonly MakeReservationViewModel _makeReservationViewModel;
-        private readonly Hotel _hotel;
+        private readonly HotelStore _hotelStore;
         private readonly NavigationService _reservationViewNavigationService;
 
-        public MakeReservationCommand(MakeReservationViewModel makeReservationViewModel, Hotel hotel, NavigationService reservationViewNavigationService)
+        public MakeReservationCommand(MakeReservationViewModel makeReservationViewModel, HotelStore hotelStore, NavigationService reservationViewNavigationService)
         {
             _makeReservationViewModel = makeReservationViewModel;
-            _hotel = hotel;
+            _hotelStore = hotelStore;
             _reservationViewNavigationService = reservationViewNavigationService;
             _makeReservationViewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
@@ -43,7 +44,7 @@ namespace ReserveRoom.Commands
 
             try
             {
-                await _hotel.MakeReservation(reservation);
+                await _hotelStore.MakeReservation(reservation);   
 
                 MessageBox.Show("Successfully reserved room.", "Success",
                     MessageBoxButton.OK, MessageBoxImage.Information);
